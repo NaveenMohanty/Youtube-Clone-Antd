@@ -11,6 +11,7 @@ const CardBox = (props) => {
       style={{ maxWidth: 290, cursor: "pointer" }}
       cover={
         <img
+          style={{ maxHeight: 200 }}
           alt={props.videoData.title}
           width="290px"
           src={props.videoData.thumbnail_url}

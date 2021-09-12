@@ -2,50 +2,57 @@ import React, { useEffect, useState } from "react";
 import { Layout } from "antd";
 import { ContextConsumer } from "../../context";
 import history from "../../utils/createHistory";
+import Comments from "./Comments";
+import Details from "./Details";
+import SideCard from "./SideCard";
 
 const { Content } = Layout;
 
 const Index = (props) => {
   const [iframe, setIframe] = useState("");
-  const { youtubeData } = ContextConsumer();
+  const [videoDetail, setVideoDetail] = useState(null);
+  const { isDark } = ContextConsumer();
+  const { youtubeData, getdata, setHistorydata, historydata } =
+    ContextConsumer();
+  const { index } = props.match.params;
   useEffect(() => {
-    let index = String(props.match.params.index);
     if (
       typeof index &&
       youtubeData.length &&
       youtubeData[index] &&
       youtubeData[index].html
     ) {
-      setIframe(index);
+      let newStr = youtubeData[index].html.replace(
+        'width="200"',
+        'width="853"'
+      );
+      setIframe(newStr.replace('height="113"', 'height="480"'));
+      setVideoDetail({ ...youtubeData[index] });
+      setHistorydata([...historydata, index]);
+    } else {
+      getdata();
     }
-  }, []);
+  }, [youtubeData, index]);
 
   return (
     <Content
       className="site-layout-background"
       style={{
+        display: "flex",
         padding: "70px 30px",
         overflowY: "scroll",
       }}
     >
-      <iframe
-        width="853"
-        height="480"
-        src={`https://www.youtube.com/watch?v=${iframe}`}
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-      <iframe
-        width="853"
-        height="480"
-        src="https://www.youtube.com/embed/VJj-ItImbt4"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
+      <div>
+        <div dangerouslySetInnerHTML={{ __html: iframe }}></div>
+        <Details videoDetail={videoDetail} />
+        <Comments isDark={isDark} />
+      </div>
+      <div style={{ width: "100%" }}>
+        {youtubeData.map((data, idx) => (
+          <SideCard data={data} parent="videoPlayer" index={idx} />
+        ))}
+      </div>
     </Content>
   );
 };

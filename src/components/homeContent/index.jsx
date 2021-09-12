@@ -26,7 +26,7 @@ const Index = () => {
         }}
       >
         {youtubeData.map((data, idx) => (
-          <CardBox videoData={data} idx={data.code} />
+          <CardBox videoData={data} code={data.code} idx={idx} />
         ))}
       </div>
     </Content>

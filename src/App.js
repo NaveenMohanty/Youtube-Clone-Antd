@@ -15,6 +15,7 @@ import { Avatar } from "antd";
 import { Switch } from "antd";
 import Routes from "./routes";
 import { ContextConsumer } from "./context";
+import history from "./utils/createHistory";
 
 const { Header, Sider } = Layout;
 
@@ -135,13 +136,25 @@ function App() {
             mode="inline"
             defaultSelectedKeys={["1"]}
           >
-            <Menu.Item key="1" icon={<HomeFilled />}>
+            <Menu.Item
+              onClick={() => history.push("/")}
+              key="1"
+              icon={<HomeFilled />}
+            >
               Home
             </Menu.Item>
-            <Menu.Item key="2" icon={<HistoryOutlined />}>
+            <Menu.Item
+              onClick={() => history.push("/HistoryPage")}
+              key="2"
+              icon={<HistoryOutlined />}
+            >
               History
             </Menu.Item>
-            <Menu.Item key="3" icon={<UploadOutlined />}>
+            <Menu.Item
+              onClick={() => history.push("/UploadVideo")}
+              key="3"
+              icon={<UploadOutlined />}
+            >
               Upload
             </Menu.Item>
           </Menu>

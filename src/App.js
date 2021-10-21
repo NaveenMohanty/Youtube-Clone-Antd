@@ -26,6 +26,8 @@ let styles = {
     justifyContent: "center",
     height: "100%",
     alignItems: "center",
+    // alignItems: "center",
+    
   },
   menuIcon: {
     fontSize: "24px",
